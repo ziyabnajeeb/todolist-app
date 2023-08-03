@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import './App.css';
 import Todos from './components/Todos/Todos';
 import CreateTodo from './components/CreateTodo/CreateTodo';
+import './App.scss';
 
 const App = () => {
   const [todoList, setTodoList] = useState([]);
