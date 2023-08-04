@@ -1,10 +1,37 @@
-/* The following block can be included in a custom.scss */
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;400;500;700;800&display=swap');
 
-/* make the customizations */
-$theme-colors: (
-  'info': tomato,
-  'danger': teal
-);
 
-/* import bootstrap to set changes */
+@import './scss/abstracts/index';
+
+/* The following line can be included in a src/App.scss */
 @import '~bootstrap/scss/bootstrap';
+
+body {
+    font-family: $font-family-base;
+    font-size: $content-font-size;
+    color: $content-gray;
+}
+
+.todo-list {
+    &__item {
+        background-color: #dfdfdf;
+
+        &-badge {
+            border-radius: 50%;
+            border: rem(2px) solid $content-gray;
+            color: $content-gray;
+            font-weight: $font-weight-bold;
+            font-size: rem(13px);
+            height: rem(20px);
+            width: rem(20px);
+            padding: rem(10px);
+            margin-right: rem(10px);
+        }
+
+        &-body-actions {
+            span {
+                cursor: pointer;
+            }
+        }
+    }
+}
