@@ -25,7 +25,7 @@ import './ToDo.scss'
                   <div className="todo-list__item-body-actions ms-auto d-flex align-items-center ps-3">
                     <span className="me-3">
                       <FaCircleCheck
-                        className={todo.status && 'text-secondary'}
+                        className={todo.status && 'text-success'}
                         onClick={() => markDone(todo.id)}
                       />
                     </span>
