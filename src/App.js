@@ -1,15 +1,12 @@
 import { useState } from 'react'
-import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { FaCircleCheck, FaPen, FaTrash } from 'react-icons/fa6'
+import { Col, Container, Row } from 'react-bootstrap'
+import { AddToDo, ToDo, UpdateToDo } from './components'
 
 import './App.scss'
 
 const App = () => {
   // Task (ToDo List) State
-  const [toDo, setToDo] = useState([
-    { id: 1, title: 'Task 1', status: false },
-    { id: 2, title: 'Task 2', status: false }
-  ])
+  const [toDo, setToDo] = useState([])
 
   const [newToDo, setNewToDo] = useState('')
   const [updatedToDoValue, setUpdatedToDoValue] = useState('')
@@ -83,62 +80,18 @@ const App = () => {
       </Row>
 
       {updatedToDoValue ? (
-        <Row>
-          <Col lg={6} className="mx-auto my-4">
-            <Row>
-              <Col xs={12} md={7}>
-                <Form.Control
-                  size="lg"
-                  placeholder="Update Todo"
-                  value={updatedToDoValue && updatedToDoValue.title}
-                  onKeyUp={(e) => updateToDo(e)}
-                  onChange={(e) => setUpdateToDoData(e)}
-                />
-              </Col>
-              <Col className="d-grid gap-3 d-md-flex justify-content-md-end mt-3 mt-md-0">
-                <Button
-                  variant="warning"
-                  size="lg"
-                  className="me-md-3"
-                  name="update-todo-btn"
-                  onClick={(e) => updateToDo(e)}>
-                  Update
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  onClick={(e) => cancelUpdate(e)}>
-                  Cancel
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+        <UpdateToDo
+          updatedToDoValue={updatedToDoValue}
+          updateToDo={updateToDo}
+          cancelUpdate={cancelUpdate}
+          setUpdateToDoData={setUpdateToDoData}
+        />
       ) : (
-        <Row>
-          <Col lg={6} className="mx-auto my-4">
-            <Row>
-              <Col xs={12} md={9}>
-                <Form.Control
-                  size="lg"
-                  placeholder="Add Todo"
-                  value={newToDo}
-                  onKeyUp={(e) => addToDo(e)}
-                  onChange={(e) => handleAddToDo(e)}
-                />
-              </Col>
-              <Col className="d-grid gap-3 d-md-flex justify-content-md-end mt-3 mt-md-0">
-                <Button
-                  variant="warning"
-                  size="lg"
-                  name="add-todo-btn"
-                  onClick={(e) => addToDo(e)}>
-                  Add Todo
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+        <AddToDo
+          addToDo={addToDo}
+          handleAddToDo={handleAddToDo}
+          newToDo={newToDo}
+        />
       )}
 
       <Row>
@@ -153,46 +106,12 @@ const App = () => {
         </Col>
       </Row>
 
-      {/* Todo List */}
-      <Row>
-        <Col lg={12} className="mt-4">
-          {toDo &&
-            toDo.map((todo, i) => (
-              <Row id={todo.id} className="todo-list" key={todo.id}>
-                <Col lg={6} className="todo-list__body mx-auto">
-                  <div className="todo-list__item d-flex align-items-center juststify-content-between mx-auto mb-3 py-2 px-3">
-                    <div className="todo-list__item-body-content d-flex flex-fill align-items-center">
-                      <p
-                        className={
-                          todo.status
-                            ? 'mb-0 text-decoration-line-through text-success'
-                            : 'mb-0'
-                        }>
-                        {todo.title}
-                      </p>
-                    </div>
-                    <div className="todo-list__item-body-actions ms-auto d-flex align-items-center ps-3">
-                      <span className="me-3">
-                        <FaCircleCheck
-                          className={todo.status && 'text-success'}
-                          onClick={() => markDone(todo.id)}
-                        />
-                      </span>
-                      {!todo.status && (
-                        <span className="me-3">
-                          <FaPen onClick={() => populateUpdateInput(todo)} />
-                        </span>
-                      )}
-                      <span className="text-danger">
-                        <FaTrash onClick={() => deleteToDo(todo.id)} />
-                      </span>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            ))}
-        </Col>
-      </Row>
+      <ToDo
+        deleteToDo={deleteToDo}
+        markDone={markDone}
+        populateUpdateInput={populateUpdateInput}
+        toDo={toDo}
+      />
     </Container>
   )
 }
