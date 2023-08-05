@@ -11,6 +11,28 @@ const App = () => {
     { id: 2, title: 'Task 2', status: false },
   ]);
 
+  const [newToDo, setNewToDo] = useState('');
+
+  const addToDo = () => {
+    if (newToDo) {
+      const newId = toDo.length === 0 ? 1 : toDo[toDo.length - 1].id + 1;
+      setToDo([...toDo, { id: newId, title: newToDo, status: false }]);
+      setNewToDo('');
+    }
+  };
+
+  const deleteToDo = (id) => {
+    setToDo(toDo.filter((todo) => todo.id !== id));
+  };
+
+  const markDone = (id) => {
+    setToDo(toDo.map((todo) => (todo.id === id ? { ...todo, status: !todo.status } : todo)));
+  };
+
+  const handleChange = (e) => {
+    setNewToDo(e.target.value);
+  };
+
   return (
     <Container as='main' className='App mt-4'>
       <Row>
@@ -43,10 +65,10 @@ const App = () => {
         <Col lg={6} className='mx-auto my-4'>
           <Row>
             <Col xs={12} md={9}>
-              <Form.Control size='lg' placeholder='Add Todo' />
+              <Form.Control size='lg' placeholder='Add Todo' value={newToDo} onChange={handleChange} />
             </Col>
             <Col className='d-grid gap-3 d-md-flex justify-content-md-end mt-3 mt-md-0'>
-              <Button variant='warning' size='lg'>
+              <Button variant='warning' size='lg' onClick={addToDo}>
                 Add Todo
               </Button>
             </Col>
@@ -62,26 +84,26 @@ const App = () => {
 
       {/* Todo List */}
       <Row>
-        <Col lg={12}>
+        <Col lg={12} className='mt-4'>
           {toDo &&
-            toDo
-              .sort((a, b) => (a.id > b.id ? 1 : -1))
-              .map((task, i) => (
-                <Row className='todo-list'>
-                  <Col lg={6} id={task.id} className='todo-list__body mx-auto mt-3'>
-                    <div className='todo-list__item d-flex align-items-center juststify-content-between mx-auto mb-3 py-3 px-4' key={task.id}>
+            toDo.map((todo, i) => (
+                <Row id={todo.id} className='todo-list' key={todo.id}>
+                  <Col lg={6} className='todo-list__body mx-auto'>
+                    <div className='todo-list__item d-flex align-items-center juststify-content-between mx-auto mb-3 py-2 px-3'>
                       <div className='todo-list__item-body-content d-flex flex-fill align-items-center'>
-                        <p className='mb-0'>{task.title}</p>
+                        <p className={todo.status ? 'mb-0 text-decoration-line-through text-success' : 'mb-0'}>{todo.title}</p>
                       </div>
                       <div className='todo-list__item-body-actions ms-auto d-flex align-items-center ps-3'>
                         <span className='me-3'>
-                          <FaCircleCheck />
+                          <FaCircleCheck className={todo.status && 'text-success'} onClick={() => markDone(todo.id)} />
                         </span>
-                        <span className='me-3'>
-                          <FaPen />
-                        </span>
+                        {!todo.status && (
+                          <span className='me-3'>
+                            <FaPen />
+                          </span>
+                        )}
                         <span className='text-danger'>
-                          <FaTrash />
+                          <FaTrash onClick={() => deleteToDo(todo.id)} />
                         </span>
                       </div>
                     </div>
