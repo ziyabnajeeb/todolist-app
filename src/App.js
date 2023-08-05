@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { AddToDo, ToDo, UpdateToDo } from './components'
 
@@ -10,6 +10,16 @@ const App = () => {
 
   const [newToDo, setNewToDo] = useState('')
   const [updatedToDoValue, setUpdatedToDoValue] = useState('')
+
+  useEffect(() => {
+    const todosData = JSON.parse(localStorage.getItem('todos'))
+
+    todosData && setToDo(todosData)
+  }, [])
+
+  useEffect(() => {
+    toDo?.length && localStorage.setItem('todos', JSON.stringify(toDo))
+  }, [toDo])
 
   // Add ToDo Functionality
   const addToDo = (e) => {
@@ -51,9 +61,8 @@ const App = () => {
 
   const setUpdateToDoData = (e) => {
     setUpdatedToDoValue({
-      id: updatedToDoValue.id,
-      title: e.target.value,
-      status: updatedToDoValue.status ? true : false
+      ...updatedToDoValue,
+      title: e.target.value
     })
   }
 
