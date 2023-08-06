@@ -12,9 +12,9 @@ const App = () => {
   const [updatedToDoValue, setUpdatedToDoValue] = useState('')
 
   useEffect(() => {
-    const todosData = JSON.parse(localStorage.getItem('todos'))
+    const fetchedTodos = JSON.parse(localStorage.getItem('todos'))
 
-    todosData && setToDo(todosData)
+    fetchedTodos && setToDo(fetchedTodos)
   }, [])
 
   useEffect(() => {
