@@ -1,5 +1,5 @@
 import { Col, Row } from 'react-bootstrap'
-import { FaCircleCheck, FaPen, FaTrash } from 'react-icons/fa6'
+import { FaCircleCheck, FaPen, FaTrashCan } from 'react-icons/fa6'
 
 import './ToDo.scss'
 
@@ -35,7 +35,7 @@ import './ToDo.scss'
                       </span>
                     )}
                     <span className="text-danger">
-                      <FaTrash onClick={() => deleteToDo(todo.id)} />
+                      <FaTrashCan onClick={() => deleteToDo(todo.id)} />
                     </span>
                   </div>
                 </div>

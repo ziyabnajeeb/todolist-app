@@ -68,6 +68,9 @@ const App = () => {
 
   const updateToDo = (e) => {
     if (e.key === 'Enter' || e.target.name === 'update-todo-btn') {
+      e.stopPropagation();
+      console.log(e.target);
+      console.log(e.target.name);
       let filterRecords = [...toDo].filter(
         (todo) => todo.id !== updatedToDoValue.id
       )
